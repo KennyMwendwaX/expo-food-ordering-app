@@ -1,5 +1,5 @@
 import { Stack, useLocalSearchParams } from "expo-router";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, Pressable } from "react-native";
 import products from "../../../../assets/data/products";
 import { defaultPizzaImage } from "@/components/ProductListItem";
 import { useState } from "react";
@@ -26,7 +26,10 @@ export default function ProductDetailsScreen() {
       <Text style={styles.sizeText}>Select size</Text>
       <View style={styles.sizes}>
         {sizes.map((size) => (
-          <View
+          <Pressable
+            onPress={() => {
+              setSelectedSize(size);
+            }}
             style={[
               styles.size,
               {
@@ -34,8 +37,16 @@ export default function ProductDetailsScreen() {
               },
             ]}
             key={size}>
-            <Text>{size}</Text>
-          </View>
+            <Text
+              style={[
+                styles.sizeText,
+                {
+                  color: selectedSize === size ? "black" : "gray",
+                },
+              ]}>
+              {size}
+            </Text>
+          </Pressable>
         ))}
       </View>
       <Text style={styles.price}>${product.price}</Text>
