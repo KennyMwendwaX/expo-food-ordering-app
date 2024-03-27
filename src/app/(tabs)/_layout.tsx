@@ -27,7 +27,7 @@ export default function TabLayout() {
         headerShown: useClientOnlyValue(false, true),
       }}>
       <Tabs.Screen
-        name="index"
+        name="menu"
         options={{
           title: "Menu",
           tabBarIcon: ({ color }) => (
