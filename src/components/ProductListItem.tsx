@@ -15,7 +15,7 @@ type ProductListItemProps = {
 
 export default function ProductListItem({ product }: ProductListItemProps) {
   return (
-    <Link href={`/(tabs)/menu/${product.id}`} asChild>
+    <Link href={`/menu/${product.id}`} asChild>
       <Pressable style={styles.container}>
         <Image
           source={{ uri: product.image || defaultPizzaImage }}

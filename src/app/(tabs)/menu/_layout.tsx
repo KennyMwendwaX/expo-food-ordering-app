@@ -1,5 +1,5 @@
 import { Stack } from "expo-router";
 
-export default function MenuSatck() {
+export default function MenuStack() {
   return <Stack />;
 }
