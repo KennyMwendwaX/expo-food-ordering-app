@@ -1,6 +1,3 @@
-// ProductListItem.js
-
-import React from "react";
 import { StyleSheet, Text, Image, Pressable } from "react-native";
 import Colors from "@/constants/Colors";
 import { Product } from "@/types";
