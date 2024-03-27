@@ -19,8 +19,17 @@ const CartProvider = ({ children }: CartProviderProps) => {
   const [items, setItems] = useState<CartItem[]>([]);
 
   const addItem = (product: Product, size: CartItem["size"]) => {
-    console.log(product);
+    const newCartItem: CartItem = {
+      id: "1",
+      product,
+      product_id: product.id,
+      size,
+      quantity: 1,
+    };
+    setItems([newCartItem, ...items]);
   };
+
+  console.log(items);
 
   return (
     <CartContext.Provider value={{ items, addItem }}>
