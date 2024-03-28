@@ -5,6 +5,7 @@ import { randomUUID } from "expo-crypto";
 type CartContextTypes = {
   items: CartItem[];
   addItem: (product: Product, size: CartItem["size"]) => void;
+  updateQuantity: (itemId: string, amount: -1 | 1) => void;
 };
 
 type CartProviderProps = {
@@ -14,6 +15,7 @@ type CartProviderProps = {
 const CartContext = createContext<CartContextTypes>({
   items: [],
   addItem: () => {},
+  updateQuantity: () => {},
 });
 
 const CartProvider = ({ children }: CartProviderProps) => {
@@ -30,10 +32,19 @@ const CartProvider = ({ children }: CartProviderProps) => {
     setItems([newCartItem, ...items]);
   };
 
-  console.log(items);
+  const updateQuantity = (itemId: string, amount: -1 | 1) => {
+    const updatedItems = items
+      .map((item) =>
+        item.id !== itemId
+          ? item
+          : { ...item, quantity: item.quantity + amount }
+      )
+      .filter((item) => item.quantity > 0);
+    setItems(updatedItems);
+  };
 
   return (
-    <CartContext.Provider value={{ items, addItem }}>
+    <CartContext.Provider value={{ items, addItem, updateQuantity }}>
       {children}
     </CartContext.Provider>
   );

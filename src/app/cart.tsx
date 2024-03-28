@@ -12,6 +12,7 @@ export default function CartScreen() {
         data={items}
         renderItem={({ item }) => <CartListItem cartItem={item} />}
         keyExtractor={(item) => item.id}
+        contentContainerStyle={{ padding: 10, gap: 10 }}
       />
 
       {/* Use a light status bar on iOS to account for the black space above the modal */}
