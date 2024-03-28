@@ -31,6 +31,7 @@ export default function ProductDetailsScreen() {
       <Image
         source={{ uri: product.image || defaultPizzaImage }}
         style={styles.image}
+        resizeMode="contain"
       />
       <Text style={styles.sizeText}>Select size</Text>
       <View style={styles.sizes}>
