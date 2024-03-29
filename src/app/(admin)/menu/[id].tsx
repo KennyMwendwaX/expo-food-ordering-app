@@ -5,23 +5,11 @@ import { defaultPizzaImage } from "@/components/ProductListItem";
 import { useState } from "react";
 import Button from "@/components/Button";
 import { useCart } from "@/app/providers/CartProvider";
-import { PizzaSize } from "@/types";
-
-const sizes: PizzaSize[] = ["S", "M", "L", "XL"];
 
 export default function ProductDetailsScreen() {
   const { id } = useLocalSearchParams();
-  const [selectedSize, setSelectedSize] = useState<PizzaSize>("M");
-  const { addItem } = useCart();
-  const router = useRouter();
 
   const product = products.find((product) => product.id.toString() === id);
-
-  const addToCart = () => {
-    if (!product) return;
-    addItem(product, selectedSize);
-    router.push("/cart");
-  };
 
   if (!product) {
     return <Text>Product not found</Text>;
@@ -35,34 +23,7 @@ export default function ProductDetailsScreen() {
         style={styles.image}
         resizeMode="contain"
       />
-      <Text style={styles.sizeText}>Select size</Text>
-      <View style={styles.sizes}>
-        {sizes.map((size) => (
-          <Pressable
-            onPress={() => {
-              setSelectedSize(size);
-            }}
-            style={[
-              styles.size,
-              {
-                backgroundColor: selectedSize === size ? "gainsboro" : "white",
-              },
-            ]}
-            key={size}>
-            <Text
-              style={[
-                styles.sizeText,
-                {
-                  color: selectedSize === size ? "black" : "gray",
-                },
-              ]}>
-              {size}
-            </Text>
-          </Pressable>
-        ))}
-      </View>
       <Text style={styles.price}>${product.price}</Text>
-      <Button onPress={addToCart} text="Add to cart" />
     </View>
   );
 }
@@ -80,16 +41,6 @@ const styles = StyleSheet.create({
   price: {
     fontSize: 18,
     fontWeight: "bold",
-    marginTop: "auto",
-  },
-  sizeText: {
-    fontSize: 20,
-    fontWeight: "500",
-  },
-  sizes: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    marginVertical: 10,
   },
   size: {
     backgroundColor: "gainsboro",
