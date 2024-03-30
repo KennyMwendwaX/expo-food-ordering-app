@@ -12,8 +12,10 @@ type ProductListItemProps = {
 
 export default function ProductListItem({ product }: ProductListItemProps) {
   const segments = useSegments();
+  const productRoute =
+    `/${segments[0]}/menu/${product.id}` as `${string}:${string}`;
   return (
-    <Link href={`${segments[0]}/menu/${product.id}`} asChild>
+    <Link href={`${productRoute}`} asChild>
       <Pressable style={styles.container}>
         <Image
           source={{ uri: product.image || defaultPizzaImage }}
