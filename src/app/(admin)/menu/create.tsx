@@ -1,41 +1,42 @@
 import Button from "@/components/Button";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { View, Text, StyleSheet, TextInput } from "react-native";
 
+type FormValues = {
+  name: string;
+  price: number;
+};
+
 export default function CreateProductScreen() {
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>();
 
-  const resetFields = () => {
-    setName("");
-    setPrice("");
-  };
-
-  const onCreate = () => {
-    console.warn("Creating product: ", name);
-    resetFields();
+  const onCreate = (values: FormValues) => {
+    console.warn("Creating product", values);
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Name</Text>
       <TextInput
-        value={name}
-        onChangeText={setName}
         placeholder="Name"
         style={styles.input}
+        {...register("name")}
       />
 
       <Text style={styles.label}>Price</Text>
       <TextInput
-        value={price}
-        onChangeText={setPrice}
         placeholder="9.99"
         style={styles.input}
         keyboardType="numeric"
+        {...register("price")}
       />
 
-      <Button text="Create" onPress={onCreate} />
+      <Button text="Create" onPress={handleSubmit(onCreate)} />
     </View>
   );
 }
