@@ -6,9 +6,13 @@ import {
   StyleSheet,
   TextInput,
   KeyboardTypeOptions,
+  Image,
 } from "react-native";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { defaultPizzaImage } from "@/components/ProductListItem";
+import Colors from "@/constants/Colors";
+import * as ImagePicker from "expo-image-picker";
 
 const formValuesSchema = z.object({
   name: z
@@ -27,7 +31,7 @@ type FormValues = z.infer<typeof formValuesSchema>;
 
 type InputProps = {
   name: keyof FormValues;
-  placeholder: string;
+  placeholder?: string;
   keyboardType?: KeyboardTypeOptions;
   control: Control<FormValues>;
 };
@@ -39,12 +43,10 @@ function Input({ name, placeholder, keyboardType, control }: InputProps) {
     name,
   });
 
-  const stringValue = field.value.toString();
-
   return (
     <TextInput
-      value={stringValue}
-      onChangeText={field.onChange} // Ensure onChange can handle string input and convert it back if necessary
+      value={field.value}
+      onChangeText={field.onChange}
       placeholder={placeholder}
       keyboardType={keyboardType}
       style={styles.input}
@@ -63,7 +65,25 @@ export default function CreateProductScreen() {
 
   console.log(errors);
 
-  const onCreate = (values: FormValues) => {
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      control.setValue("imageUrl", result.assets[0].uri); // Set image URL
+    }
+  };
+
+  const onCreate = (data: FormValues) => {
+    const numericPrice = parseFloat(data.price);
+    const values = {
+      ...data,
+      price: numericPrice,
+    };
     console.warn("Creating product", values);
   };
 
@@ -75,6 +95,9 @@ export default function CreateProductScreen() {
       {errors.price && (
         <Text style={styles.errorMessage}>{errors.price.message}</Text>
       )}
+
+      <Image source={{ uri: defaultPizzaImage }} style={styles.image} />
+      <Text style={styles.textButton}>Select Image</Text>
 
       <Text style={styles.label}>Name</Text>
       <Input name="name" placeholder="Name" control={control} />
@@ -95,6 +118,17 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     padding: 10,
+  },
+  image: {
+    width: "50%",
+    aspectRatio: 1,
+    alignSelf: "center",
+  },
+  textButton: {
+    alignSelf: "center",
+    fontWeight: "bold",
+    color: Colors.light.tint,
+    marginVertical: 10,
   },
   label: {
     color: "gray",
