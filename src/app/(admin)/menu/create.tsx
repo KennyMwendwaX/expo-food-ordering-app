@@ -1,5 +1,5 @@
 import Button from "@/components/Button";
-import { Control, useController, useForm } from "react-hook-form";
+import { Control, Controller, useController, useForm } from "react-hook-form";
 import {
   View,
   Text,
@@ -10,9 +10,9 @@ import {
 } from "react-native";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { defaultPizzaImage } from "@/components/ProductListItem";
 import Colors from "@/constants/Colors";
 import * as ImagePicker from "expo-image-picker";
+import { useEffect, useState } from "react";
 
 const formValuesSchema = z.object({
   name: z
@@ -64,33 +64,38 @@ export default function CreateProductScreen() {
   const {
     control,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<FormValues>({
     resolver: zodResolver(formValuesSchema),
   });
 
-  console.log(errors);
+  const [imageUri, setImageUri] = useState<string | null>(null);
 
   const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
     });
+    console.log("Image result:", result);
 
-    if (!result.cancelled) {
-      control.setValue("imageUrl", result.assets[0].uri); // Set image URL
+    if (!result.canceled) {
+      setValue("imageUrl", result.assets[0].uri);
+      setImageUri(result.assets[0].uri); // Update the imageUri state
     }
   };
 
+  useEffect(() => {
+    setValue("imageUrl", "");
+  }, [setValue]);
+
   const onCreate = (data: FormValues) => {
     const numericPrice = parseFloat(data.price);
-    const values = {
-      ...data,
-      price: numericPrice,
-    };
-    console.warn("Creating product", values);
+    const values = { ...data, price: numericPrice };
+    console.log("Creating product", values);
   };
 
   return (
@@ -101,9 +106,24 @@ export default function CreateProductScreen() {
       {errors.price && (
         <Text style={styles.errorMessage}>{errors.price.message}</Text>
       )}
-
-      <Image source={{ uri: defaultPizzaImage }} style={styles.image} />
-      <Text style={styles.textButton}>Select Image</Text>
+      <Controller
+        name="imageUrl"
+        control={control}
+        render={({ field: { onChange, value } }) => (
+          <>
+            {imageUri && (
+              <Image
+                source={{ uri: imageUri }}
+                style={styles.image}
+                resizeMode="contain"
+              />
+            )}
+            <Text style={styles.textButton} onPress={() => pickImage()}>
+              Select Image
+            </Text>
+          </>
+        )}
+      />
 
       <Text style={styles.label}>Name</Text>
       <Input name="name" placeholder="Name" control={control} />
