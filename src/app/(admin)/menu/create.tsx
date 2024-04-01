@@ -25,6 +25,12 @@ const formValuesSchema = z.object({
   price: z.string({
     required_error: "Price is required",
   }),
+  imageUrl: z
+    .string({
+      required_error: "Image is required",
+      invalid_type_error: "Invalid image URL",
+    })
+    .url({ message: "Invalid image URL format" }),
 });
 
 type FormValues = z.infer<typeof formValuesSchema>;
