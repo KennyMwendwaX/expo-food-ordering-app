@@ -109,7 +109,7 @@ export default function CreateProductScreen() {
       <Controller
         name="imageUrl"
         control={control}
-        render={({ field: { onChange, value } }) => (
+        render={() => (
           <>
             {imageUri && (
               <Image
