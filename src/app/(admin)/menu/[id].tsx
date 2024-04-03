@@ -20,7 +20,6 @@ export default function ProductDetailsScreen() {
   return (
     <View style={styles.container}>
       <Stack.Screen
-        name="[id]"
         options={{
           title: product.name,
           headerRight: () => (
@@ -39,12 +38,13 @@ export default function ProductDetailsScreen() {
           ),
         }}
       />
-      {/* <Stack.Screen options={{ title: product.name }} /> */}
+
       <Image
         source={{ uri: product.image || defaultPizzaImage }}
         style={styles.image}
         resizeMode="contain"
       />
+
       <Text style={styles.price}>${product.price}</Text>
     </View>
   );

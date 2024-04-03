@@ -14,6 +14,7 @@ import Colors from "@/constants/Colors";
 import * as ImagePicker from "expo-image-picker";
 import { useEffect, useState } from "react";
 import { Stack, useLocalSearchParams } from "expo-router";
+import { defaultPizzaImage } from "@/components/ProductListItem";
 
 const formValuesSchema = z.object({
   name: z
@@ -61,7 +62,7 @@ function Input({ name, placeholder, keyboardType, control }: InputProps) {
   );
 }
 
-export default function CreateProductScreen() {
+export default function ProductFormScreen() {
   const {
     control,
     handleSubmit,
@@ -99,7 +100,21 @@ export default function CreateProductScreen() {
   const onCreate = (data: FormValues) => {
     const numericPrice = parseFloat(data.price);
     const values = { ...data, price: numericPrice };
-    console.log("Creating product", values);
+    console.log("Creating product...", values);
+  };
+
+  const onUpdate = (data: FormValues) => {
+    const numericPrice = parseFloat(data.price);
+    const values = { ...data, price: numericPrice };
+    console.log("Updating product...", values);
+  };
+
+  const onSubmit = (data: FormValues) => {
+    if (isUpdating) {
+      onUpdate(data);
+    } else {
+      onCreate(data);
+    }
   };
 
   return (
@@ -120,7 +135,7 @@ export default function CreateProductScreen() {
           <>
             {imageUri && (
               <Image
-                source={{ uri: imageUri }}
+                source={{ uri: imageUri || defaultPizzaImage }}
                 style={styles.image}
                 resizeMode="contain"
               />
@@ -141,7 +156,10 @@ export default function CreateProductScreen() {
         keyboardType="numeric"
         control={control}
       />
-      <Button text="Create" onPress={handleSubmit(onCreate)} />
+      <Button
+        text={isUpdating ? "Update" : "Create"}
+        onPress={handleSubmit(onSubmit)}
+      />
     </View>
   );
 }
