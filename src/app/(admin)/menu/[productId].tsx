@@ -9,9 +9,11 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import Colors from "@/constants/Colors";
 
 export default function ProductDetailsScreen() {
-  const { id } = useLocalSearchParams();
+  const { productId } = useLocalSearchParams();
 
-  const product = products.find((product) => product.id.toString() === id);
+  const product = products.find(
+    (product) => product.id.toString() === productId
+  );
 
   if (!product) {
     return <Text>Product not found</Text>;
@@ -23,7 +25,9 @@ export default function ProductDetailsScreen() {
         options={{
           title: product.name,
           headerRight: () => (
-            <Link href={`/(admin)/menu/create?id=${id}`} asChild>
+            <Link
+              href={`/(admin)/menu/product-form?productId=${productId}`}
+              asChild>
               <Pressable>
                 {({ pressed }) => (
                   <FontAwesome

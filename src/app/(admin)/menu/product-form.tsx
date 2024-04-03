@@ -74,8 +74,8 @@ export default function ProductFormScreen() {
 
   const [imageUri, setImageUri] = useState<string | null>(null);
 
-  const { id } = useLocalSearchParams();
-  const isUpdating = !!id;
+  const { productId } = useLocalSearchParams();
+  const isUpdating = !!productId;
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -116,6 +116,10 @@ export default function ProductFormScreen() {
       onCreate(data);
     }
   };
+
+  const onDelete = () => {};
+
+  const confirmDelete = () => {};
 
   return (
     <View style={styles.container}>
@@ -160,6 +164,10 @@ export default function ProductFormScreen() {
         text={isUpdating ? "Update" : "Create"}
         onPress={handleSubmit(onSubmit)}
       />
+
+      {isUpdating && (
+        <Text onPress={confirmDelete} style={styles.textButton}></Text>
+      )}
     </View>
   );
 }
