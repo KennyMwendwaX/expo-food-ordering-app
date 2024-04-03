@@ -26,26 +26,6 @@ export default function MenuStack() {
           ),
         }}
       />
-
-      <Stack.Screen
-        name="[id]"
-        options={{
-          headerRight: () => (
-            <Link href="/" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="edit"
-                    size={25}
-                    color={Colors.light.tint}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
-        }}
-      />
     </Stack>
   );
 }

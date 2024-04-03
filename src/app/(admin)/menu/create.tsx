@@ -13,6 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Colors from "@/constants/Colors";
 import * as ImagePicker from "expo-image-picker";
 import { useEffect, useState } from "react";
+import { Stack, useLocalSearchParams } from "expo-router";
 
 const formValuesSchema = z.object({
   name: z
@@ -72,10 +73,13 @@ export default function CreateProductScreen() {
 
   const [imageUri, setImageUri] = useState<string | null>(null);
 
+  const { id } = useLocalSearchParams();
+  const isUpdating = !!id;
+
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
@@ -84,7 +88,7 @@ export default function CreateProductScreen() {
 
     if (!result.canceled) {
       setValue("imageUrl", result.assets[0].uri);
-      setImageUri(result.assets[0].uri); // Update the imageUri state
+      setImageUri(result.assets[0].uri);
     }
   };
 
@@ -100,6 +104,9 @@ export default function CreateProductScreen() {
 
   return (
     <View style={styles.container}>
+      <Stack.Screen
+        options={{ title: isUpdating ? "Update Product" : "Create Product" }}
+      />
       {errors.name && (
         <Text style={styles.errorMessage}>{errors.name.message}</Text>
       )}
