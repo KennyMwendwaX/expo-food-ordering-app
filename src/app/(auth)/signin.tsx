@@ -21,8 +21,7 @@ const formValuesSchema = z.object({
       required_error: "Email is required",
       invalid_type_error: "Email must be a string",
     })
-    .email("Invalid email address")
-    .min(1, { message: "Required" }),
+    .email("Invalid email address"),
   password: z
     .string({
       required_error: "Password is required",
@@ -106,6 +105,13 @@ export default function SigninScreen() {
           title: "Sign In",
         }}
       />
+
+      {errors.email && (
+        <Text style={styles.errorMessage}>{errors.email.message}</Text>
+      )}
+      {errors.password && (
+        <Text style={styles.errorMessage}>{errors.password.message}</Text>
+      )}
 
       <Text style={styles.label}>Email</Text>
       <Input

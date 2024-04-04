@@ -146,6 +146,9 @@ export default function ProductFormScreen() {
       {errors.price && (
         <Text style={styles.errorMessage}>{errors.price.message}</Text>
       )}
+      {errors.imageUrl && (
+        <Text style={styles.errorMessage}>{errors.imageUrl.message}</Text>
+      )}
       <Controller
         name="imageUrl"
         control={control}
