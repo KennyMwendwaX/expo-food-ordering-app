@@ -171,9 +171,9 @@ export default function SignupScreen() {
         control={control}
       />
 
-      <Button text="Sign Up" onPress={handleSubmit(onSubmit)} />
+      <Button text="Create account" onPress={handleSubmit(onSubmit)} />
 
-      <Link style={styles.textButton} href={"/(auth)/signup"}>
+      <Link style={styles.textButton} href={"/(auth)/signin"}>
         Signin
       </Link>
     </View>

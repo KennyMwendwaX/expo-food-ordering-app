@@ -133,7 +133,7 @@ export default function SigninScreen() {
       <Button text="Sign In" onPress={handleSubmit(onSubmit)} />
 
       <Link style={styles.textButton} href={"/(auth)/signup"}>
-        Signup
+        Create an account
       </Link>
     </View>
   );
