@@ -11,7 +11,7 @@ type OrderListItemProps = {
   order: Order;
 };
 
-export function OrderListItem({ order }: OrderListItemProps) {
+export default function OrderListItem({ order }: OrderListItemProps) {
   const segments = useSegments();
   const orderRoute =
     `/${segments[0]}/orders/${order.id}` as `${string}:${string}`;
