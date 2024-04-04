@@ -7,6 +7,7 @@ import {
   TextInput,
   KeyboardTypeOptions,
   Image,
+  Alert,
 } from "react-native";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -117,9 +118,22 @@ export default function ProductFormScreen() {
     }
   };
 
-  const onDelete = () => {};
+  const onDelete = () => {
+    console.log("Deleting...");
+  };
 
-  const confirmDelete = () => {};
+  const confirmDelete = () => {
+    Alert.alert("Confirm", "Are you sure you want to delete this product", [
+      {
+        text: "Cancel",
+      },
+      {
+        text: "Delete",
+        style: "destructive",
+        onPress: onDelete,
+      },
+    ]);
+  };
 
   return (
     <View style={styles.container}>
@@ -166,7 +180,9 @@ export default function ProductFormScreen() {
       />
 
       {isUpdating && (
-        <Text onPress={confirmDelete} style={styles.textButton}></Text>
+        <Text onPress={confirmDelete} style={styles.textButton}>
+          Delete
+        </Text>
       )}
     </View>
   );
