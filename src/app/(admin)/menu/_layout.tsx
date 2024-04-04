@@ -3,7 +3,7 @@ import { Link, Stack } from "expo-router";
 import { Pressable } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
-export default function MenuStack() {
+export default function MenuLayout() {
   return (
     <Stack>
       <Stack.Screen
