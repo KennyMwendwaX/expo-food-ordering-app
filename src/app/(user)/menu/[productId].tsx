@@ -10,12 +10,14 @@ import { PizzaSize } from "@/types";
 const sizes: PizzaSize[] = ["S", "M", "L", "XL"];
 
 export default function ProductDetailsScreen() {
-  const { id } = useLocalSearchParams();
+  const { productId } = useLocalSearchParams();
   const [selectedSize, setSelectedSize] = useState<PizzaSize>("M");
   const { addItem } = useCart();
   const router = useRouter();
 
-  const product = products.find((product) => product.id.toString() === id);
+  const product = products.find(
+    (product) => product.id.toString() === productId
+  );
 
   const addToCart = () => {
     if (!product) return;
