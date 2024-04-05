@@ -1,4 +1,4 @@
-import { FlatList } from "react-native-gesture-handler";
+import { FlatList } from "react-native";
 import orders from "../../../../assets/data/orders";
 import OrderListItem from "@/components/OrderListItem";
 
