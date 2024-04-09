@@ -1,14 +1,22 @@
-import { Stack } from "expo-router";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
-export default function OrdersStack() {
+import OrdersScreen from "./index";
+
+const Tab = createMaterialTopTabNavigator();
+
+export default function OrdersLayout() {
   return (
-    <Stack>
-      <Stack.Screen
-        name="index"
-        options={{
-          title: "Orders",
-        }}
+    <Tab.Navigator>
+      <Tab.Screen
+        name="Active"
+        component={OrdersScreen}
+        initialParams={{ status: "active" }}
       />
-    </Stack>
+      <Tab.Screen
+        name="Delivered"
+        component={OrdersScreen}
+        initialParams={{ status: "delivered" }}
+      />
+    </Tab.Navigator>
   );
 }
