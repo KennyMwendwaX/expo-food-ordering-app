@@ -25,6 +25,7 @@ export default function OrderDetailScreen() {
         data={order.order_items}
         renderItem={({ item }) => <OrderItemListItem item={item} />}
         contentContainerStyle={{ gap: 10 }}
+        ListHeaderComponent={() => <OrderListItem order={order} />}
       />
 
       <Text style={{ fontWeight: "bold" }}>Status</Text>
