@@ -1,6 +1,6 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
-import OrdersScreen from "./index";
+import OrdersScreen from "./list/index";
 
 const Tab = createMaterialTopTabNavigator();
 
