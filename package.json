@@ -18,13 +18,13 @@
     "@react-native-async-storage/async-storage": "^1.23.1",
     "@react-navigation/material-top-tabs": "^6.6.13",
     "@react-navigation/native": "^6.0.2",
-    "@supabase/supabase-js": "^2.42.0",
     "expo": "^50.0.15",
     "expo-crypto": "~12.8.1",
     "expo-font": "~11.10.3",
     "expo-image-picker": "~14.7.1",
     "expo-linking": "~6.2.2",
     "expo-router": "~3.4.8",
+    "expo-secure-store": "~12.8.1",
     "expo-splash-screen": "~0.26.4",
     "expo-status-bar": "~1.11.1",
     "expo-system-ui": "~2.9.3",
@@ -40,8 +40,7 @@
     "react-native-tab-view": "^3.5.2",
     "react-native-url-polyfill": "^2.0.0",
     "react-native-web": "~0.19.6",
-    "zod": "^3.22.4",
-    "expo-secure-store": "~12.8.1"
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
