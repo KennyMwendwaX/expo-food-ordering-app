@@ -3,7 +3,7 @@ import { Stack, useLocalSearchParams } from "expo-router";
 import orders from "../../../../assets/data/orders";
 import OrderItemListItem from "@/components/OrderItemListItem";
 import OrderListItem from "@/components/OrderListItem";
-import { OrderStatusList } from "@/types";
+import { Order, OrderStatusList } from "@/types";
 import Colors from "@/constants/Colors";
 
 export default function OrderDetailScreen() {
@@ -26,8 +26,19 @@ export default function OrderDetailScreen() {
         renderItem={({ item }) => <OrderItemListItem item={item} />}
         contentContainerStyle={{ gap: 10 }}
         ListHeaderComponent={() => <OrderListItem order={order} />}
+        ListEmptyComponent={() => <OrderStatusSelector order={order} />}
       />
+    </View>
+  );
+}
 
+type OrderStatusSelectorProps = {
+  order: Order;
+};
+
+function OrderStatusSelector({ order }: OrderStatusSelectorProps) {
+  return (
+    <>
       <Text style={{ fontWeight: "bold" }}>Status</Text>
       <View style={{ flexDirection: "row", gap: 5 }}>
         {OrderStatusList.map((status) => (
@@ -52,7 +63,7 @@ export default function OrderDetailScreen() {
           </Pressable>
         ))}
       </View>
-    </View>
+    </>
   );
 }
 
