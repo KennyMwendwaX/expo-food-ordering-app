@@ -110,13 +110,31 @@ export default function SignupScreen() {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const onSubmit = (data: FormValues) => {
+  const onSubmit = async (data: FormValues) => {
     const payload = {
       name: data.name,
       email: data.email,
       password: data.password,
     };
-    console.log(payload);
+
+    try {
+      const response = await fetch("http://192.168.0.100:3000/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to create user");
+      }
+
+      const responseData = await response.json();
+      console.log(responseData); // Handle response data as needed
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
