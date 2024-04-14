@@ -1,7 +1,6 @@
 import express from "express";
-import type { Request, Response } from "express";
 import dotenv from "dotenv";
-import usersRouter from "./routes/users/users";
+import usersRouter from "./routes/users";
 
 dotenv.config();
 

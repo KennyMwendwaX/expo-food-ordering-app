@@ -1,7 +1,7 @@
 import express from "express";
 import type { Request, Response } from "express";
-import prisma from "../../lib/db";
-import { signupSchema } from "../../lib/schema";
+import prisma from "../lib/db";
+import { signupSchema } from "../lib/schema";
 import bcrypt from "bcrypt";
 
 const router = express.Router();
