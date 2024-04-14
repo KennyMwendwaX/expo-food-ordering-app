@@ -22,7 +22,7 @@ export const signupSchema = z.object({
     .min(8, { message: "Password must be greater than 8 characters long" }),
 });
 
-const productSchema = z.object({
+export const productSchema = z.object({
   name: z
     .string({
       required_error: "Name is required",
