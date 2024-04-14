@@ -6,8 +6,13 @@ import { productSchema } from "../lib/schema";
 const router = express.Router();
 
 router.get("/", async (req: Request, res: Response) => {
-  const products = await prisma.product.findMany();
-  res.status(200).json({ products });
+  try {
+    const products = await prisma.product.findMany();
+    res.status(200).json({ products });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 });
 
 router.post("/", async (req: Request, res: Response) => {
@@ -31,6 +36,28 @@ router.post("/", async (req: Request, res: Response) => {
     }
 
     res.status(201).json({ message: "Product created successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+router.get("/:id", async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+
+    const product = await prisma.product.findFirst({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!product) {
+      res.status(404).json({ message: "Product not found" });
+      return;
+    }
+
+    res.status(201).json({ product });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal server error" });
