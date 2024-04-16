@@ -99,7 +99,7 @@ export default function ProductFormScreen() {
     setValue("imageUrl", "");
   }, [setValue]);
 
-  const onCreate = (data: FormValues) => {
+  const onCreate = async (data: FormValues) => {
     const numericPrice = parseFloat(data.price);
 
     // Check if the parsed value is not a valid number
@@ -123,7 +123,24 @@ export default function ProductFormScreen() {
     // Clear any previous price error
     setPriceError(null);
 
-    console.log("Creating product...", data);
+    try {
+      const response = await fetch("http://192.168.0.100:3000/products", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to create product");
+      }
+
+      const responseData = await response.json();
+      console.log(responseData); // Handle response data as needed
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   const onUpdate = (data: FormValues) => {

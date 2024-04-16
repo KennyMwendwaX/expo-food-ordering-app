@@ -17,7 +17,10 @@ router.get("/", async (req: Request, res: Response) => {
 
 router.post("/", async (req: Request, res: Response) => {
   try {
-    const result = productSchema.safeParse(req.body);
+    const priceVal = parseFloat(req.body.price);
+    const data = { ...req.body, price: priceVal };
+
+    const result = productSchema.safeParse(data);
 
     if (!result.success) {
       res.status(400).json({ message: "Invalid data" });
@@ -27,7 +30,7 @@ router.post("/", async (req: Request, res: Response) => {
     const { name, price, imageUrl } = result.data;
 
     const newProduct = await prisma.product.create({
-      data: { name: name, price: Number(price), imageUrl: imageUrl },
+      data: { name: name, price: price, imageUrl: imageUrl },
     });
 
     if (!newProduct) {
