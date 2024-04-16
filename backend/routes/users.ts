@@ -18,7 +18,7 @@ router.get("/", async (req: Request, res: Response) => {
 
 router.post("/", async (req: Request, res: Response) => {
   try {
-    const result = signupSchema.safeParse(req.body);
+    const result = await signupSchema.safeParseAsync(req.body);
 
     if (!result.success) {
       res.status(400).json({ message: "Invalid data" });
