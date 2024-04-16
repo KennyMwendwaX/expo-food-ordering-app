@@ -74,6 +74,7 @@ export default function ProductFormScreen() {
   });
 
   const [imageUri, setImageUri] = useState<string | null>(null);
+  const [priceError, setPriceError] = useState<string | null>(null);
 
   const { productId } = useLocalSearchParams();
   const isUpdating = !!productId;
@@ -100,14 +101,56 @@ export default function ProductFormScreen() {
 
   const onCreate = (data: FormValues) => {
     const numericPrice = parseFloat(data.price);
-    const values = { ...data, price: numericPrice };
-    console.log("Creating product...", values);
+
+    // Check if the parsed value is not a valid number
+    if (Number.isNaN(numericPrice)) {
+      setPriceError("Price must be a valid number");
+      return;
+    }
+
+    // Check if the parsed value is different from the original string value
+    if (numericPrice.toString() !== data.price) {
+      setPriceError("Price contains invalid characters");
+      return;
+    }
+
+    // Check if the price is less than or equal to 0
+    if (numericPrice <= 0) {
+      setPriceError("Price must be greater than 0");
+      return;
+    }
+
+    // Clear any previous price error
+    setPriceError(null);
+
+    console.log("Creating product...", data);
   };
 
   const onUpdate = (data: FormValues) => {
     const numericPrice = parseFloat(data.price);
-    const values = { ...data, price: numericPrice };
-    console.log("Updating product...", values);
+
+    // Check if the parsed value is not a valid number
+    if (Number.isNaN(numericPrice)) {
+      setPriceError("Price must be a valid number");
+      return;
+    }
+
+    // Check if the parsed value is different from the original string value
+    if (numericPrice.toString() !== data.price) {
+      setPriceError("Price contains invalid characters");
+      return;
+    }
+
+    // Check if the price is less than or equal to 0
+    if (numericPrice <= 0) {
+      setPriceError("Price must be greater than 0");
+      return;
+    }
+
+    // Clear any previous price error
+    setPriceError(null);
+
+    console.log("Updating product...", data);
   };
 
   const onSubmit = (data: FormValues) => {
@@ -143,8 +186,10 @@ export default function ProductFormScreen() {
       {errors.name && (
         <Text style={styles.errorMessage}>{errors.name.message}</Text>
       )}
-      {errors.price && (
-        <Text style={styles.errorMessage}>{errors.price.message}</Text>
+      {(errors.price || priceError !== null) && (
+        <Text style={styles.errorMessage}>
+          {errors.price?.message || priceError}
+        </Text>
       )}
       {errors.imageUrl && (
         <Text style={styles.errorMessage}>{errors.imageUrl.message}</Text>
