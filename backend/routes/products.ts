@@ -8,10 +8,10 @@ const router = express.Router();
 router.get("/", async (req: Request, res: Response) => {
   try {
     const products = await prisma.product.findMany();
-    res.status(200).json({ products });
+    return res.status(200).json({ products });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "Internal server error" });
+    return res.status(500).json({ message: "Internal server error" });
   }
 });
 
@@ -23,8 +23,7 @@ router.post("/", async (req: Request, res: Response) => {
     const result = await productSchema.safeParseAsync(data);
 
     if (!result.success) {
-      res.status(400).json({ message: "Invalid data" });
-      return;
+      return res.status(400).json({ message: "Invalid data" });
     }
 
     const { name, price, imageUrl } = result.data;
@@ -34,14 +33,13 @@ router.post("/", async (req: Request, res: Response) => {
     });
 
     if (!newProduct) {
-      res.status(500).json({ message: "Failed to create product" });
-      return;
+      return res.status(500).json({ message: "Failed to create product" });
     }
 
-    res.status(201).json({ message: "Product created successfully" });
+    return res.status(201).json({ message: "Product created successfully" });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "Internal server error" });
+    return res.status(500).json({ message: "Internal server error" });
   }
 });
 
@@ -56,30 +54,28 @@ router.get("/:id", async (req: Request, res: Response) => {
     });
 
     if (!product) {
-      res.status(404).json({ message: "Product not found" });
-      return;
+      return res.status(404).json({ message: "Product not found" });
     }
 
-    res.status(201).json({ product });
+    return res.status(201).json({ product });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "Internal server error" });
+    return res.status(500).json({ message: "Internal server error" });
   }
 });
 
 router.put("/:id", async (req: Request, res: Response) => {
   try {
-    const id = req.params.id;
+    const productId = req.params.id;
 
     const product = await prisma.product.findFirst({
       where: {
-        id: id,
+        id: productId,
       },
     });
 
     if (!product) {
-      res.status(404).json({ message: "Product not found" });
-      return;
+      return res.status(404).json({ message: "Product not found" });
     }
 
     const priceValue = parseFloat(req.body.price);
@@ -88,8 +84,7 @@ router.put("/:id", async (req: Request, res: Response) => {
     const result = await productSchema.safeParseAsync(data);
 
     if (!result.success) {
-      res.status(400).json({ message: "Invalid data" });
-      return;
+      return res.status(400).json({ message: "Invalid data" });
     }
 
     const { name, price, imageUrl } = result.data;
@@ -100,14 +95,13 @@ router.put("/:id", async (req: Request, res: Response) => {
     });
 
     if (!updatedProduct) {
-      res.status(500).json({ message: "Failed to update product" });
-      return;
+      return res.status(500).json({ message: "Failed to update product" });
     }
 
-    res.status(200).json({ message: "Product updated successfully" });
+    return res.status(200).json({ message: "Product updated successfully" });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "Internal server error" });
+    return res.status(500).json({ message: "Internal server error" });
   }
 });
 
