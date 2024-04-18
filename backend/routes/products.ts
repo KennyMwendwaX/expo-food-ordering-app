@@ -90,7 +90,7 @@ router.put("/:id", async (req: Request, res: Response) => {
     const { name, price, imageUrl } = result.data;
 
     const updatedProduct = await prisma.product.update({
-      where: { id: product.id },
+      where: { id: productId },
       data: { name: name, price: price, imageUrl: imageUrl },
     });
 
@@ -99,6 +99,37 @@ router.put("/:id", async (req: Request, res: Response) => {
     }
 
     return res.status(200).json({ message: "Product updated successfully" });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+router.delete("/:id", async (req: Request, res: Response) => {
+  try {
+    const productId = req.params.id;
+
+    const product = await prisma.product.findFirst({
+      where: {
+        id: productId,
+      },
+    });
+
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    const deletedProduct = await prisma.product.delete({
+      where: {
+        id: productId,
+      },
+    });
+
+    if (!deletedProduct) {
+      return res.status(500).json({ message: "Failed to delete product" });
+    }
+
+    return res.status(204).json({ message: "Product deleted successfully" });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Internal server error" });
