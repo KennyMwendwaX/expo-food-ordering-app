@@ -9,10 +9,10 @@ const router = express.Router();
 router.get("/", async (req: Request, res: Response) => {
   try {
     const users = await prisma.user.findMany();
-    res.status(200).json({ users });
+    return res.status(200).json({ users });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "Internal server error" });
+    return res.status(500).json({ message: "Internal server error" });
   }
 });
 
@@ -21,8 +21,7 @@ router.post("/", async (req: Request, res: Response) => {
     const result = await signupSchema.safeParseAsync(req.body);
 
     if (!result.success) {
-      res.status(400).json({ message: "Invalid data" });
-      return;
+      return res.status(400).json({ message: "Invalid data" });
     }
 
     const { name, email, password } = result.data;
@@ -34,8 +33,7 @@ router.post("/", async (req: Request, res: Response) => {
     });
 
     if (userExists) {
-      res.status(409).json({ message: "Email already registered" });
-      return;
+      return res.status(409).json({ message: "Email already registered" });
     }
 
     const hashedPassword = bcrypt.hashSync(password, 10);
@@ -45,14 +43,13 @@ router.post("/", async (req: Request, res: Response) => {
     });
 
     if (!newUser) {
-      res.status(500).json({ message: "Failed to create user" });
-      return;
+      return res.status(500).json({ message: "Failed to create user" });
     }
 
-    res.status(201).json({ message: "User created successfully" });
+    return res.status(201).json({ message: "User created successfully" });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "Internal server error" });
+    return res.status(500).json({ message: "Internal server error" });
   }
 });
 
