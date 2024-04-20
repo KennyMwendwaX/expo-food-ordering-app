@@ -1,5 +1,4 @@
-import { RequestHandler } from "express";
-import type { Request, Response } from "express";
+import type { RequestHandler, Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
 interface UserPayload {
@@ -15,7 +14,7 @@ interface AuthRequest extends Request {
 export const authenticate: RequestHandler = (
   req: AuthRequest,
   res: Response,
-  next
+  next: NextFunction
 ) => {
   const token = req.headers.authorization?.split(" ")[1];
 

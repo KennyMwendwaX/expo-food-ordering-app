@@ -19,7 +19,7 @@ router.get("/", async (req: Request, res: Response) => {
 });
 
 // REGISTER USER
-router.post("/", async (req: Request, res: Response) => {
+router.post("/signup", async (req: Request, res: Response) => {
   try {
     const result = await signupSchema.safeParseAsync(req.body);
 
@@ -57,7 +57,7 @@ router.post("/", async (req: Request, res: Response) => {
 });
 
 // LOGIN USER
-router.post("/login", async (req: Request, res: Response) => {
+router.post("/signin", async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
 

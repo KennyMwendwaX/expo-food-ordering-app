@@ -15,7 +15,7 @@
   "dependencies": {
     "@expo/vector-icons": "^14.0.0",
     "@hookform/resolvers": "^3.3.4",
-    "@react-native-async-storage/async-storage": "^1.23.1",
+    "@react-native-async-storage/async-storage": "1.21.0",
     "@react-navigation/material-top-tabs": "^6.6.13",
     "@react-navigation/native": "^6.0.2",
     "expo": "^50.0.15",
@@ -29,6 +29,7 @@
     "expo-status-bar": "~1.11.1",
     "expo-system-ui": "~2.9.3",
     "expo-web-browser": "~12.8.2",
+    "jsonwebtoken": "^9.0.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.51.2",
@@ -44,6 +45,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@types/jsonwebtoken": "^9.0.6",
     "@types/react": "~18.2.45",
     "jest": "^29.2.1",
     "jest-expo": "~50.0.4",

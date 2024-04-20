@@ -118,7 +118,7 @@ export default function SignupScreen() {
     };
 
     try {
-      const response = await fetch("http://192.168.0.100:3000/users", {
+      const response = await fetch("http://192.168.0.100:3000/users/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
