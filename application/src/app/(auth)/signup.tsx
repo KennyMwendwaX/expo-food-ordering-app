@@ -14,6 +14,7 @@ import {
   Pressable,
 } from "react-native";
 import { z } from "zod";
+import { useAuth } from "../providers/AuthProvider";
 
 const formValuesSchema = z
   .object({
@@ -108,6 +109,8 @@ export default function SignupScreen() {
     resolver: zodResolver(formValuesSchema),
   });
 
+  const { signUp } = useAuth();
+
   const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = async (data: FormValues) => {
@@ -118,22 +121,9 @@ export default function SignupScreen() {
     };
 
     try {
-      const response = await fetch("http://192.168.0.100:3000/users/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to create user");
-      }
-
-      const responseData = await response.json();
-      console.log(responseData); // Handle response data as needed
+      await signUp(payload);
     } catch (error) {
-      console.error("Error:", error);
+      console.log("Signup Error:", error);
     }
   };
 

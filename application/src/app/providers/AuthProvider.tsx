@@ -63,7 +63,23 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     name: string;
     email: string;
     password: string;
-  }) => {};
+  }) => {
+    try {
+      const response = await fetch("http://192.168.0.100:3000/users/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(signupData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to create user");
+      }
+    } catch (error) {
+      console.log("Signup Error: ", error);
+    }
+  };
 
   const signIn = async (signinData: { email: string; password: string }) => {};
 
