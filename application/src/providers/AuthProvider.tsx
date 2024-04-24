@@ -94,8 +94,19 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
       if (!response.ok) {
         throw new Error("Failed to login");
       }
+
+      const responseData = await response.json();
+      const token = responseData.token;
+
+      await AsyncStorage.setItem("token", token);
+
+      const decodedToken = jwt.decode(token);
+
+      setUser(decodedToken as User);
+      setToken(token);
     } catch (error) {
       console.log("Signin Error: ", error);
+      throw error;
     }
   };
 
