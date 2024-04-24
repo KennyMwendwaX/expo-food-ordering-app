@@ -65,13 +65,16 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     password: string;
   }) => {
     try {
-      const response = await fetch("http://192.168.0.100:3000/users/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(signupData),
-      });
+      const response = await fetch(
+        `${process.env.EXPO_PUBLIC_SERVER_URL}/users/signup`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(signupData),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to create user");
@@ -83,13 +86,16 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const signIn = async (signinData: { email: string; password: string }) => {
     try {
-      const response = await fetch("http://192.168.0.100:3000/users/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(signinData),
-      });
+      const response = await fetch(
+        `${process.env.EXPO_PUBLIC_SERVER_URL}/users/signin`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(signinData),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to login");
