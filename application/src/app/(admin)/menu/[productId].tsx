@@ -4,7 +4,7 @@ import products from "../../../../assets/data/products";
 import { defaultPizzaImage } from "@/components/ProductListItem";
 import { useState } from "react";
 import Button from "@/components/Button";
-import { useCart } from "@/app/providers/CartProvider";
+import { useCart } from "@/providers/CartProvider";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import Colors from "@/constants/Colors";
 

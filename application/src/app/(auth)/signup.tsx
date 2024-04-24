@@ -14,7 +14,7 @@ import {
   Pressable,
 } from "react-native";
 import { z } from "zod";
-import { useAuth } from "../providers/AuthProvider";
+import { useAuth } from "../../providers/AuthProvider";
 
 const formValuesSchema = z
   .object({

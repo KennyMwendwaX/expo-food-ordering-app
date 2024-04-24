@@ -3,7 +3,7 @@ import React from "react";
 import Colors from "@/constants/Colors";
 import { CartItem } from "@/types";
 import { FontAwesome } from "@expo/vector-icons";
-import { useCart } from "@/app/providers/CartProvider";
+import { useCart } from "@/providers/CartProvider";
 import { defaultPizzaImage } from "./ProductListItem";
 // import RemoteImage from "@/RemoteImage";
 

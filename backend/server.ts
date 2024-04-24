@@ -7,7 +7,7 @@ dotenv.config();
 
 const app = express();
 const port = Number(process.env.PORT) || 3000;
-app.use(express.json());
+app.use(express.urlencoded());
 
 app.use("/users", usersRouter);
 app.use("/products", productsRouter);

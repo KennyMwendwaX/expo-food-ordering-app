@@ -81,7 +81,23 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
-  const signIn = async (signinData: { email: string; password: string }) => {};
+  const signIn = async (signinData: { email: string; password: string }) => {
+    try {
+      const response = await fetch("http://192.168.0.100:3000/users/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(signinData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to login");
+      }
+    } catch (error) {
+      console.log("Signin Error: ", error);
+    }
+  };
 
   const signOut = () => {
     AsyncStorage.removeItem("token");
