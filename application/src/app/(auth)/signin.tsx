@@ -3,7 +3,7 @@ import Colors from "@/constants/Colors";
 import { useAuth } from "@/providers/AuthProvider";
 import { FontAwesome } from "@expo/vector-icons";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link, Stack } from "expo-router";
+import { Link, Stack, useRouter } from "expo-router";
 import { Dispatch, useState } from "react";
 import { Control, useController, useForm } from "react-hook-form";
 import {
@@ -94,12 +94,14 @@ export default function SigninScreen() {
   });
 
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
 
   const { signIn } = useAuth();
 
   const onSubmit = async (payload: FormValues) => {
     try {
       await signIn(payload);
+      router.push("/");
     } catch (error) {
       console.log("Signin Error:", error);
     }

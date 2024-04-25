@@ -6,6 +6,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import "core-js/stable/atob";
 import { jwtDecode } from "jwt-decode";
 
 type User = {

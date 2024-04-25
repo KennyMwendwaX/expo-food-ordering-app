@@ -2,7 +2,7 @@ import Button from "@/components/Button";
 import Colors from "@/constants/Colors";
 import { FontAwesome } from "@expo/vector-icons";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link, Stack } from "expo-router";
+import { Link, Stack, useRouter } from "expo-router";
 import { Dispatch, useState } from "react";
 import { Control, useController, useForm } from "react-hook-form";
 import {
@@ -110,6 +110,7 @@ export default function SignupScreen() {
   });
 
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
 
   const { signUp } = useAuth();
 
@@ -122,6 +123,7 @@ export default function SignupScreen() {
 
     try {
       await signUp(payload);
+      router.push("/(auth)/signin");
     } catch (error) {
       console.log("Signup Error:", error);
     }
