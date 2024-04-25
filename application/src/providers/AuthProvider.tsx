@@ -6,7 +6,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import jwt from "jsonwebtoken";
+import { jwtDecode } from "jwt-decode";
 
 type User = {
   id: string;
@@ -48,7 +48,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
         const storedToken = await AsyncStorage.getItem("token");
         if (storedToken) {
           setToken(storedToken);
-          const decodedToken = jwt.decode(storedToken);
+          const decodedToken = jwtDecode(storedToken);
           setUser(decodedToken as User);
         }
       } catch (error) {
@@ -106,7 +106,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 
       await AsyncStorage.setItem("token", token);
 
-      const decodedToken = jwt.decode(token);
+      const decodedToken = jwtDecode(token);
 
       setUser(decodedToken as User);
       setToken(token);
