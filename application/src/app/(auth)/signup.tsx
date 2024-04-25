@@ -109,9 +109,9 @@ export default function SignupScreen() {
     resolver: zodResolver(formValuesSchema),
   });
 
-  const { signUp } = useAuth();
-
   const [showPassword, setShowPassword] = useState(false);
+
+  const { signUp } = useAuth();
 
   const onSubmit = async (data: FormValues) => {
     const payload = {

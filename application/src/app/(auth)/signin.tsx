@@ -1,5 +1,6 @@
 import Button from "@/components/Button";
 import Colors from "@/constants/Colors";
+import { useAuth } from "@/providers/AuthProvider";
 import { FontAwesome } from "@expo/vector-icons";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, Stack } from "expo-router";
@@ -94,8 +95,14 @@ export default function SigninScreen() {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const onSubmit = (data: FormValues) => {
-    console.log(data);
+  const { signIn } = useAuth();
+
+  const onSubmit = async (payload: FormValues) => {
+    try {
+      await signIn(payload);
+    } catch (error) {
+      console.log("Signin Error:", error);
+    }
   };
 
   return (
