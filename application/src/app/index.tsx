@@ -4,7 +4,7 @@ import { Link, Redirect } from "expo-router";
 import { View } from "react-native";
 
 export default function index() {
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
 
   if (!user) {
     return <Redirect href={"/(auth)/signin"} />;
@@ -21,6 +21,7 @@ export default function index() {
       <Link href={"/(auth)/signin"} asChild>
         <Button text="Sign in" />
       </Link>
+      <Button text="Sign out" onPress={() => signOut()} />
     </View>
   );
 }
