@@ -46,7 +46,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   useEffect(() => {
     const loadUserFromStorage = async () => {
       try {
-        const storedToken = await AsyncStorage.getItem("token");
+        const storedToken = await AsyncStorage.getItem("auth_token");
         if (storedToken) {
           setToken(storedToken);
           const decodedToken = jwtDecode(storedToken);
@@ -105,7 +105,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
       const responseData = await response.json();
       const token = responseData.token;
 
-      await AsyncStorage.setItem("token", token);
+      await AsyncStorage.setItem("auth_token", token);
 
       const decodedToken = jwtDecode(token);
 
@@ -118,7 +118,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   const signOut = () => {
-    AsyncStorage.removeItem("token");
+    AsyncStorage.removeItem("auth_token");
     setUser(null);
     setToken(null);
   };
