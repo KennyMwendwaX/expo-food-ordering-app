@@ -39,7 +39,7 @@ const AuthContext = createContext<AuthData>({
   signOut: () => {},
 });
 
-const AuthProvider = ({ children }: AuthProviderProps) => {
+export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
 
@@ -129,7 +129,5 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     </AuthContext.Provider>
   );
 };
-
-export default AuthProvider;
 
 export const useAuth = () => useContext(AuthContext);
