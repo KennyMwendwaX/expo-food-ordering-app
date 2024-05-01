@@ -94,6 +94,7 @@ export default function SigninScreen() {
   });
 
   const [showPassword, setShowPassword] = useState(false);
+  const [serverError, setServerError] = useState<string | null>(null);
   const router = useRouter();
 
   const { signIn } = useAuth();
@@ -103,7 +104,12 @@ export default function SigninScreen() {
       await signIn(payload);
       router.push("/");
     } catch (error) {
-      console.log("Signin Error:", error);
+      if (error instanceof Error) {
+        setServerError(error.message);
+        console.log("Signin Error:", error.message);
+      } else {
+        console.log("Unexpected error:", error);
+      }
     }
   };
 
@@ -121,6 +127,7 @@ export default function SigninScreen() {
       {errors.password && (
         <Text style={styles.errorMessage}>{errors.password.message}</Text>
       )}
+      {serverError && <Text style={styles.errorMessage}>{serverError}</Text>}
 
       <Text style={styles.label}>Email</Text>
       <Input

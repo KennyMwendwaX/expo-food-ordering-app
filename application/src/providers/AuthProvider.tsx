@@ -101,7 +101,8 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
       );
 
       if (!response.ok) {
-        throw new Error("Failed to login");
+        const errorData = await response.json();
+        throw new Error(errorData.message);
       }
 
       const responseData = await response.json();
