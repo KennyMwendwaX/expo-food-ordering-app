@@ -39,7 +39,7 @@ const AuthContext = createContext<AuthData>({
   signOut: () => {},
 });
 
-export const AuthProvider = ({ children }: AuthProviderProps) => {
+const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
 
@@ -78,10 +78,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       );
 
       if (!response.ok) {
-        throw new Error("Failed to create user");
+        const errorData = await response.json();
+        throw new Error(errorData.message);
       }
     } catch (error) {
       console.log("Signup Error: ", error);
+      throw error;
     }
   };
 
@@ -129,5 +131,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     </AuthContext.Provider>
   );
 };
+
+export default AuthProvider;
 
 export const useAuth = () => useContext(AuthContext);

@@ -110,6 +110,7 @@ export default function SignupScreen() {
   });
 
   const [showPassword, setShowPassword] = useState(false);
+  const [serverError, setServerError] = useState<string | null>(null);
   const router = useRouter();
 
   const { signUp } = useAuth();
@@ -125,7 +126,12 @@ export default function SignupScreen() {
       await signUp(payload);
       router.push("/(auth)/signin");
     } catch (error) {
-      console.log("Signup Error:", error);
+      if (error instanceof Error) {
+        setServerError(error.message);
+        console.log("Signup Error:", error.message);
+      } else {
+        console.log("Unexpected error:", error);
+      }
     }
   };
 
@@ -151,6 +157,7 @@ export default function SignupScreen() {
           {errors.confirm_password.message}
         </Text>
       )}
+      {serverError && <Text style={styles.errorMessage}>{serverError}</Text>}
 
       <Text style={styles.label}>Name</Text>
       <Input name="name" placeholder="John Doe" control={control} />

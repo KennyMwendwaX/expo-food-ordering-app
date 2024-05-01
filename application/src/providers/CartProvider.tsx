@@ -20,7 +20,7 @@ const CartContext = createContext<CartContextTypes>({
   total: 0,
 });
 
-export const CartProvider = ({ children }: CartProviderProps) => {
+const CartProvider = ({ children }: CartProviderProps) => {
   const [items, setItems] = useState<CartItem[]>([]);
 
   const addItem = (product: Product, size: CartItem["size"]) => {
@@ -65,5 +65,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     </CartContext.Provider>
   );
 };
+
+export default CartProvider;
 
 export const useCart = () => useContext(CartContext);
